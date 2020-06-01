@@ -1,4 +1,4 @@
-package com.projet.web;
+	package com.projet.web;
 
 import java.util.Date;
 import java.util.List;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projet.dao.ClientRepository;
@@ -81,8 +82,11 @@ public void retirer(@PathVariable  String codeCompte, @PathVariable double monta
 			  	verser(codeCompte2, montant);
 	}
 	
-	@GetMapping("/comptes/listOperation/{codeCompte}&{page}&{size}") 
-	public Page<Operation> listOperation(@PathVariable String codeCompte, @PathVariable int page, @PathVariable int size){
+	@GetMapping("/comptes/listOperation") 
+	public Page<Operation> listOperation(@RequestParam(name = "codeCompte") String codeCompte,
+			@RequestParam (name = "page", defaultValue ="0") int page,
+			@RequestParam (name = "size", defaultValue = "5") int size) {
+		
 		return operationRepository.listOperation(codeCompte, PageRequest.of(page, size));
 		
 	}
